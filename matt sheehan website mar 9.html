@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matt Sheehan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+        
+        header {
+            border-bottom: 1px solid #ddd;
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        nav h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #333;
+            transition: color 0.2s;
+        }
+        
+        nav a:hover {
+            color: #666;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+        
+        .bio {
+            margin-bottom: 4rem;
+            line-height: 1.8;
+            overflow: auto;
+        }
+        
+        .bio p {
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .content-item {
+            border: 1px solid #eee;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+        
+        .content-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .content-image {
+            width: 100%;
+            height: 200px;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        .content-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .content-image.video-container {
+            height: auto;
+            background: none;
+        }
+        
+        .content-body {
+            padding: 1.5rem;
+        }
+        
+        .content-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        
+        .content-item h3 a {
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .content-item h3 a:hover {
+            color: #0066cc;
+        }
+        
+        .content-item p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        
+        .content-item .tags {
+            margin-top: 1rem;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 0.25rem 0.75rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .video-embed {
+            width: 100%;
+            padding-bottom: 56.25%;
+            position: relative;
+            height: 0;
+        }
+        
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        footer {
+            border-top: 1px solid #ddd;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .about-layout {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+        
+        .about-image {
+            width: 300px;
+            height: auto;
+            border-radius: 4px;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text p {
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Matt Sheehan</h1>
+            <ul>
+                <li><a href="#" onclick="showSection('home'); return false;">Home</a></li>
+                <li><a href="#" onclick="showSection('about'); return false;">About</a></li>
+                <li><a href="#" onclick="showSection('analysis'); return false;">Analysis</a></li>
+                <li><a href="#" onclick="showSection('reporting'); return false;">Reporting</a></li>
+                <li><a href="#" onclick="showSection('podcasts'); return false;">Podcasts/Videos</a></li>
+                <li><a href="#" onclick="showSection('book'); return false;">Book</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div id="about" class="section">
+            <h2>About Matt</h2>
+            <div class="about-layout">
+                <img src="headshot.jpg" alt="Matt Sheehan" class="about-image">
+                <div class="about-text">
+                    <p>Matt Sheehan is a senior fellow at the Carnegie Endowment for International Peace, where his research covers artificial intelligence development and policy, with a focus on China. His research projects explore China's AI policy ecosystem, the role of technology in China's political economy, and U.S.-China competition in AI. Matt is the author of <em>The Transpacific Experiment: How China and California Collaborate and Compete for our Future</em> (Counterpoint Press, 2019).</p>
+                    
+                    <p>From 2010-2016 Matt lived and worked in China, including as the first China correspondent for the World Post. After returning from China, Matt worked as a fellow at the Paulson Institute's think tank, MacroPolo, where he led research on Chinese technology issues.</p>
+                    
+                    <p>His writing has been published by the Atlantic, Bloomberg, Vice, and Wired. His research has been cited by numerous government agencies and media outlets, including the National Security Commission on AI, the New York Times, the Wall Street Journal, and the San Francisco Chronicle. Matt reads, writes, and speaks Mandarin Chinese.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="home" class="section active">
+            <div style="display: flex; gap: 2rem; margin-bottom: 4rem; align-items: stretch; flex-wrap: wrap;">
+                <img src="headshot.jpg" alt="Matt Sheehan" style="width: 250px; height: 100%; object-fit: cover; border-radius: 4px; flex-shrink: 0;">
+                <div class="bio" style="flex: 1; min-width: 300px; margin-bottom: 0;">
+                    <p>I'm Matt Sheehan, a senior fellow at the Carnegie Endowment for International Peace, where my research covers artificial intelligence development and policy, with a focus on China. My research projects explore China's AI policy ecosystem, the role of technology in China's political economy, and U.S.-China competition in AI. I'm the author of <em>The Transpacific Experiment: How China and California Collaborate and Compete for our Future</em> (Counterpoint Press, 2019). I read, write and speak Mandarin Chinese. You can find more of my work at <a href="https://mattsheehan.substack.com/" target="_blank">my Substack</a>.</p>
+                </div>
+            </div>
+
+            <h2>My favorite work</h2>
+            
+            <div class="content-grid">
+                <!-- Row 1 -->
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="ai-regulations-image.jpg" alt="Neural networks">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://carnegieendowment.org/research/2024/02/tracing-the-roots-of-chinas-ai-regulations?lang=en" target="_blank">Tracing the Roots of China's AI Regulations</a></h3>
+                        <p>A deep investigation into how China became the first country to implement detailed, binding regulations on AI applications, tracing the policy funnel from face-swap apps through bureaucratic processes.</p>
+                        <div class="tags">
+                            <span class="tag">Analysis</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="migration-image.jpg" alt="Chinese New Year migration">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://www.noemamag.com/39-hours-inside-the-biggest-human-migration-on-earth-3/" target="_blank">39 Hours Inside the Biggest Human Migration on Earth</a></h3>
+                        <p>An immersive narrative account of traveling with millions of Chinese workers during the Lunar New Year migration, the world's largest annual movement of people.</p>
+                        <div class="tags">
+                            <span class="tag">Reporting</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image video-container">
+                        <div class="video-embed">
+                            <iframe src="https://www.youtube.com/embed/qDNFaAz3_Cw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://www.youtube.com/watch?v=qDNFaAz3_Cw" target="_blank">America and China Are Racing to Different AI Futures</a></h3>
+                        <p>My appearance on the Your Undivided Attention podcast, exploring fundamental questions about how the Chinese government and public approach AI, the most persistent misconceptions in the West, and whether cooperation between rivals is actually possible.</p>
+                        <div class="tags">
+                            <span class="tag">Podcasts/Videos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="companion-reg.jpg" alt="AI companions regulation">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://carnegieendowment.org/research/2026/02/china-is-worried-about-ai-companions-heres-what-its-doing-about-them" target="_blank">China is Worried About AI Companions. Here's What It's Doing About Them</a></h3>
+                        <p>A new draft regulation on "anthropomorphic AI" could impose significant new compliance burdens on the makers of AI companions and chatbots, targeting addiction and psychological harms from emotional interactions with AI.</p>
+                        <div class="tags">
+                            <span class="tag">Analysis</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="split-pants.jpg" alt="Great Hall of the People">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://thechinaproject.com/2017/03/10/time-split-pants-open-great-hall-people/" target="_blank">That Time I Split My Pants Open at the Great Hall of the People</a></h3>
+                        <p>A narrative account of asking a politically charged question at the Premier's press conference during China's annual Two Sessions meetings, and the wardrobe malfunction that nearly derailed the whole thing.</p>
+                        <div class="tags">
+                            <span class="tag">Reporting</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image video-container">
+                        <div class="video-embed">
+                            <iframe src="https://www.youtube.com/embed/5VNtor3V6xM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://www.youtube.com/watch?v=5VNtor3V6xM" target="_blank">Rhapsody in Beijing</a></h3>
+                        <p>My visual love letter to the city of Beijing, with scenes of the city that I filmed set to Rhapsody in Blue.</p>
+                        <div class="tags">
+                            <span class="tag">Podcasts/Videos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Remaining items -->
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="ai-risks-image.jpg" alt="AI circuit board">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://carnegieendowment.org/research/2025/10/how-china-views-ai-risks-and-what-to-do-about-them?lang=en" target="_blank">How China Views AI Risks and What to Do About Them</a></h3>
+                        <p>Analyzing China's new AI Safety Governance Framework 2.0, which reveals growing concern over risks from open-source models, labor market impacts, and potential loss of control over advanced AI systems.</p>
+                        <div class="tags">
+                            <span class="tag">Analysis</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="diffusion-plan.jpg" alt="AI diffusion plan">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://mattsheehan.substack.com/p/chinas-big-ai-diffusion-plan-is-here" target="_blank">China's Big AI Diffusion Plan is Here. Will it Work?</a></h3>
+                        <p>Analyzing China's AI+ initiative, which aims to accelerate development and deployment of AI across the economy, following in the tradition of tech stimulus policies like the 2015 Internet+ campaign.</p>
+                        <div class="tags">
+                            <span class="tag">Analysis</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="talent-tracker-image.jpg" alt="Global talent flow">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://web.archive.org/web/20200627075301/https://macropolo.org/digital-projects/the-global-ai-talent-tracker/" target="_blank">The Global AI Talent Tracker</a></h3>
+                        <p>An interactive data project mapping the global flow of top AI researchers, revealing patterns in where talent is trained and where it ends up working.</p>
+                        <div class="tags">
+                            <span class="tag">Analysis</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="village-image.jpg" alt="Chinese village">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://www.noemamag.com/memories-of-torture-and-hope-for-redemption-in-a-chinese-village-2/" target="_blank">Memories of Torture and Hope for Redemption in a Chinese Village</a></h3>
+                        <p>The story of Liu Renwang, who was tortured into confessing to murder and spent five years in prison before his conviction was overturned, examining China's criminal justice reforms under Xi Jinping.</p>
+                        <div class="tags">
+                            <span class="tag">Reporting</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="brothers-image.jpg" alt="Chinese students">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://www.noemamag.com/twin-ambitions-two-brothers-follow-their-college-dreams-to-china-and-u-s-2/" target="_blank">Twin Ambitions: Two Brothers Follow Their College Dreams to China and U.S.</a></h3>
+                        <p>Following two brothers from rural China as they pursue dramatically different educational paths, revealing the choices and trade-offs facing Chinese students today.</p>
+                        <div class="tags">
+                            <span class="tag">Reporting</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="heartland-mainland.jpg" alt="Heartland Mainland podcast">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://open.spotify.com/episode/6QWuw1ndG0Rx6UqtVHuP0V" target="_blank">Heartland Mainland: The China Caucuses</a></h3>
+                        <p>Exploring how China became an issue in Iowa's presidential caucuses, connecting the dots between trade wars, rural America, and U.S.-China relations.</p>
+                        <div class="tags">
+                            <span class="tag">Podcasts/Videos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="heartland-mainland.jpg" alt="Heartland Mainland podcast">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://open.spotify.com/episode/0TphgPZgAQALAInjhLkBrk" target="_blank">Heartland Mainland: Freshman Orientation</a></h3>
+                        <p>The first episode introducing the Heartland Mainland podcast series, examining the connections between America's heartland and China.</p>
+                        <div class="tags">
+                            <span class="tag">Podcasts/Videos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="analysis" class="section">
+            <h2>Analysis</h2>
+            <div class="content-grid">
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="ai-regulations-image.jpg" alt="Neural networks">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://carnegieendowment.org/research/2024/02/tracing-the-roots-of-chinas-ai-regulations?lang=en" target="_blank">Tracing the Roots of China's AI Regulations</a></h3>
+                        <p>A deep investigation into how China became the first country to implement detailed, binding regulations on AI applications, tracing the policy funnel from face-swap apps through bureaucratic processes.</p>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="talent-tracker-image.jpg" alt="Global talent flow">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://web.archive.org/web/20200627075301/https://macropolo.org/digital-projects/the-global-ai-talent-tracker/" target="_blank">The Global AI Talent Tracker</a></h3>
+                        <p>An interactive data project mapping the global flow of top AI researchers, revealing patterns in where talent is trained and where it ends up working.</p>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="ai-risks-image.jpg" alt="AI circuit board">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://carnegieendowment.org/research/2025/10/how-china-views-ai-risks-and-what-to-do-about-them?lang=en" target="_blank">How China Views AI Risks and What to Do About Them</a></h3>
+                        <p>Analyzing China's new AI Safety Governance Framework 2.0, which reveals growing concern over risks from open-source models, labor market impacts, and potential loss of control over advanced AI systems.</p>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="companion-reg.jpg" alt="AI companions regulation">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://carnegieendowment.org/research/2026/02/china-is-worried-about-ai-companions-heres-what-its-doing-about-them" target="_blank">China is Worried About AI Companions. Here's What It's Doing About Them</a></h3>
+                        <p>A new draft regulation on "anthropomorphic AI" could impose significant new compliance burdens on the makers of AI companions and chatbots, targeting addiction and psychological harms from emotional interactions with AI.</p>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="diffusion-plan.jpg" alt="AI diffusion plan">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://mattsheehan.substack.com/p/chinas-big-ai-diffusion-plan-is-here" target="_blank">China's Big AI Diffusion Plan is Here. Will it Work?</a></h3>
+                        <p>Analyzing China's AI+ initiative, which aims to accelerate development and deployment of AI across the economy, following in the tradition of tech stimulus policies like the 2015 Internet+ campaign.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="reporting" class="section">
+            <h2>Reporting</h2>
+            <div class="content-grid">
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="village-image.jpg" alt="Chinese village">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://www.noemamag.com/memories-of-torture-and-hope-for-redemption-in-a-chinese-village-2/" target="_blank">Memories of Torture and Hope for Redemption in a Chinese Village</a></h3>
+                        <p>The story of Liu Renwang, who was tortured into confessing to murder and spent five years in prison before his conviction was overturned, examining China's criminal justice reforms under Xi Jinping.</p>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="migration-image.jpg" alt="Chinese New Year migration">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://www.noemamag.com/39-hours-inside-the-biggest-human-migration-on-earth-3/" target="_blank">39 Hours Inside the Biggest Human Migration on Earth</a></h3>
+                        <p>An immersive narrative account of traveling with millions of Chinese workers during the Lunar New Year migration, the world's largest annual movement of people.</p>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="brothers-image.jpg" alt="Chinese students">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://www.noemamag.com/twin-ambitions-two-brothers-follow-their-college-dreams-to-china-and-u-s-2/" target="_blank">Twin Ambitions: Two Brothers Follow Their College Dreams to China and U.S.</a></h3>
+                        <p>Following two brothers from rural China as they pursue dramatically different educational paths, revealing the choices and trade-offs facing Chinese students today.</p>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="split-pants.jpg" alt="Great Hall of the People">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://thechinaproject.com/2017/03/10/time-split-pants-open-great-hall-people/" target="_blank">That Time I Split My Pants Open at the Great Hall of the People</a></h3>
+                        <p>A narrative account of asking a politically charged question at the Premier's press conference during China's annual Two Sessions meetings, and the wardrobe malfunction that nearly derailed the whole thing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="podcasts" class="section">
+            <h2>Podcasts & Videos</h2>
+            <div class="content-grid">
+                <div class="content-item">
+                    <div class="content-image video-container">
+                        <div class="video-embed">
+                            <iframe src="https://www.youtube.com/embed/qDNFaAz3_Cw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://www.youtube.com/watch?v=qDNFaAz3_Cw" target="_blank">America and China Are Racing to Different AI Futures</a></h3>
+                        <p>My appearance on the Your Undivided Attention podcast, exploring fundamental questions about how the Chinese government and public approach AI, the most persistent misconceptions in the West, and whether cooperation between rivals is actually possible.</p>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="heartland-mainland.jpg" alt="Heartland Mainland podcast">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://open.spotify.com/episode/6QWuw1ndG0Rx6UqtVHuP0V" target="_blank">Heartland Mainland: The China Caucuses</a></h3>
+                        <p>Exploring how China became an issue in Iowa's presidential caucuses, connecting the dots between trade wars, rural America, and U.S.-China relations.</p>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image">
+                        <img src="heartland-mainland.jpg" alt="Heartland Mainland podcast">
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://open.spotify.com/episode/0TphgPZgAQALAInjhLkBrk" target="_blank">Heartland Mainland: Freshman Orientation</a></h3>
+                        <p>The first episode introducing the Heartland Mainland podcast series, examining the connections between America's heartland and China.</p>
+                    </div>
+                </div>
+
+                <div class="content-item">
+                    <div class="content-image video-container">
+                        <div class="video-embed">
+                            <iframe src="https://www.youtube.com/embed/5VNtor3V6xM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <h3><a href="https://www.youtube.com/watch?v=5VNtor3V6xM" target="_blank">Rhapsody in Beijing</a></h3>
+                        <p>My visual love letter to the city of the city of Beijing, with scenes of the city that I filmed set to Rhapsody in Blue.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="book" class="section">
+            <h2>The Transpacific Experiment</h2>
+            <div class="content-item" style="max-width: 800px;">
+                <div class="content-image" style="height: auto; max-height: 500px;">
+                    <img src="book-cover.jpg" alt="The Transpacific Experiment book cover" style="width: auto; height: auto; max-height: 500px; max-width: 100%; object-fit: contain;">
+                </div>
+                <div class="content-body">
+                    <h3>How China and California Collaborate and Compete for our Future</h3>
+                    <p><strong>Counterpoint Press, 2019</strong></p>
+                    <p style="margin-top: 1rem; line-height: 1.8;">The Transpacific Experiment explores the surprising connections between China and California, two of the world's most innovative regions. Drawing on years of reporting and research, the book examines how entrepreneurs, students, and ideas flow between these two places, creating a complex web of collaboration and competition that shapes our technological future.</p>
+                    <p style="margin-top: 1rem;"><a href="https://www.counterpointpress.com/book/the-transpacific-experiment/" target="_blank">Learn more →</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Matt Sheehan</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
